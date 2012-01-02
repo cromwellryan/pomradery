@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="/scripts/system"></script>
+		<script src="/scripts/pomodoro"></script>
+		<script>
+			var socket = io.connect('http://localhost:8080');
+			var id = null;
+			var pom = new pomodoro();
+
+			var refresh = function() {
+				var remaining = pom.remaining();
+				$('#timeremaining').text(remaining.minutes + ':' + remaining.seconds);
+			}
+
+			socket.on('started', function (data) {
+				pom.start(1);
+				id = setInterval( refresh, 1000 );
+			});
+
+			socket.on('done', function (data) {
+				if(id != null)
+					clearInterval(id);
+
+				$("#timeremaining").html("done");
+			});
+
+			$( function() {
+				$("#start").click( function() { 	
+					socket.emit('start');
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<button id="start">Start</button><button id="join">Join</button>
+		<div id="timeremaining"></div>
+	</body>
+</html>
