@@ -15,7 +15,7 @@
 			}
 
 			socket.on('started', function (data) {
-				pom.start(1);
+				pom.start(data.duration);
 				id = setInterval( refresh, 1000 );
 			});
 

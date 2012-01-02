@@ -33,21 +33,43 @@ app.get('/scripts/:script', function(req,res) {
 
 app.listen(8080);
 
-io.sockets.on('connection', function (socket) {
-	console.log('connected');
+var pomodoro = function() {
+	var started = false
+		,	done = null,
 
-	var group = "pomradery"
-		, endPomodoro = function() {
-			io.sockets.in(group).emit("done"); 
-	};
+	endPomodoro = function() {
+		done();
+		started = false;
+	},
+
+	start = function(duration, ondone) {
+		if(started) return;
+		done = ondone;
+		started = true;
+
+		setTimeout( endPomodoro, duration * 60 * 1000);	
+	}	
+
+	return { start: start };
+
+}
+	
+var currentpom = new pomodoro();
+
+io.sockets.on('connection', function (socket) {
+	var pomodoroduration = 1
+		, started = false
+		, group = "pomradery";
 
 	socket.join(group);
 
+	var expired = function() {
+		io.sockets.in(group).emit("done"); 
+	};
+
 	socket.on('start', function (data) {
-		setTimeout( endPomodoro, 1 * 60 * 1000);	
-		
-		io.sockets.in(group).emit("started");
-		
+		currentpom.start(pomodoroduration, expired);
+		io.sockets.in(group).emit("started", { duration: pomodoroduration });
 	});
 
 });
