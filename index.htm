@@ -11,12 +11,19 @@
 
 			var refresh = function() {
 				var remaining = pom.remaining();
-				$('#timeremaining').text(remaining.minutes + ':' + remaining.seconds);
+				var seconds = remaining.seconds < 10 ? "0" : "";
+				seconds += remaining.seconds;
+
+				$('#timeremaining').text(remaining.minutes + ':' + seconds);
 			}
 
 			socket.on('started', function (data) {
 				pom.start(data.duration);
 				id = setInterval( refresh, 1000 );
+			});
+
+			socket.on('remaining', function (data) {
+				$("#timeremaining").html(data.duration + ":00");
 			});
 
 			socket.on('done', function (data) {
@@ -30,11 +37,13 @@
 				$("#start").click( function() { 	
 					socket.emit('start');
 				});
+
 			});
 		</script>
+		<link rel="stylesheet" href="/styles/default" type="text/css"></link>
 	</head>
 	<body>
-		<button id="start">Start</button><button id="join">Join</button>
+		<a id="start" href="#">Start</a>
 		<div id="timeremaining"></div>
 	</body>
 </html>
