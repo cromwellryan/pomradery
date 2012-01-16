@@ -1,9 +1,11 @@
 <html>
 	<head>
-		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script src="/scripts/jquery-1.7.1.min"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/scripts/system"></script>
 		<script src="/scripts/pomodoro"></script>
+		<link rel="stylesheet" href="/styles/bootstrap.min">
+
 		<script>
 
 			var host = document.location.origin;
@@ -42,10 +44,55 @@
 
 			});
 		</script>
-		<link rel="stylesheet" href="/styles/default" type="text/css"></link>
 	</head>
 	<body>
-		<a id="start" href="#">Start</a>
-		<div id="timeremaining"></div>
+		<div class="topbar">
+			<div class="topbar-inner">
+				<div class="container"><h3><a href="/">Pomradery</a></h3></div>
+			</div>
+		</div>
+
+
+		<div class="container">
+			<header>
+				<div class="page-header"><h1>Pomradery</h1></div>
+			</header>
+		
+			<div class="content">
+				<div class="row">
+					<div class="span10">
+						<form id="join">
+							<fieldset>
+								<legend>Join</legend>
+								<div class="clearfix">
+									<div class="input">
+										<input id="username" name="username" type="text" style="height: 28" placeholder="your name">
+									</div>
+								</div>
+								<div class="actions">
+									<input type="submit" class="btn primary disabled" disabled value="Join">
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div>
+			
+				<div class="row">
+					<div class="span10">
+						<form>
+							<fieldset>
+								<div class="clearfix">
+									<legend id="timeremaining">&nbsp;</legend>
+								</div>
+								<div class="actions">
+									<input type="button" class="btn primary" id="start" href="#" value="Start">
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</div> <!-- end row -->
+			</div> <!-- end content -->
+
+		</div> <!-- end container -->
 	</body>
 </html>
