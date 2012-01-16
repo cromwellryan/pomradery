@@ -2,8 +2,8 @@ var io = require('socket.io')
 	, express = require('express')
 	, fs = require('fs');
 
-var app = express.createServer()
-	, io = io.listen(app),
+var port = process.env.PORT || 9191;
+var app = express.createServer();
 
 outfile = function(path, contenttype, res) {
 	console.log('outing: ' + path);
@@ -41,8 +41,8 @@ app.get('/:type/:script', function(req,res) {
 	outfile(path, contenttype, res);
 });
 
-var port = process.env.PORT || 8080;
 app.listen(port);
+var sio = io.listen(app);
 
 var pomodoro = function() {
 	var started = false
@@ -69,19 +69,19 @@ var pomodoro = function() {
 	
 var currentpom = new pomodoro();
 
-io.sockets.on('connection', function (socket) {
+sio.sockets.on('connection', function (socket) {
 	var pomodoroduration = 25
 		, group = "pomradery";
 
 	socket.join(group);
 
 	var expired = function() {
-		io.sockets.in(group).emit("done"); 
+		sio.sockets.in(group).emit("done"); 
 	};
 
 	socket.on('start', function (data) {
 		currentpom.start(pomodoroduration, expired, function() { 
-			io.sockets.in(group).emit("started", { duration: pomodoroduration });
+			sio.sockets.in(group).emit("started", { duration: pomodoroduration });
 		});
 	});
 
