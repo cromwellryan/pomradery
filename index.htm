@@ -5,7 +5,9 @@
 		<script src="/scripts/system"></script>
 		<script src="/scripts/pomodoro"></script>
 		<script>
-			var socket = io.connect('http://localhost:8080');
+
+			var host = document.location.origin;
+			var socket = io.connect(host);
 			var id = null;
 			var pom = new pomodoro();
 
