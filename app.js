@@ -15,7 +15,7 @@ outfile = function(path, contenttype, res) {
 			res.send( data );
 		}
 
-		res.end();
+		//res.end();
 	});
 };
 
