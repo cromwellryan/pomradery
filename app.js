@@ -12,10 +12,9 @@ outfile = function(path, contenttype, res) {
 		if( err ) throw err;
 		else {
 			res.contentType(contenttype);
-			res.send( data );
+			res.end( data );
 		}
 
-		//res.end();
 	});
 };
 
