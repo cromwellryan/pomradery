@@ -1,10 +1,24 @@
 {
-    "name": "application-name"
-  , "version": "0.0.1"
-  , "private": true
-	, "scripts": { "start": "node app.js" }
-  , "dependencies": {
-      "express": "2.5.2"
-    , "jade": ">= 0.0.1"
+  "name": "Pomradery",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "2.5.2",
+    "jade": ">= 0.0.1",
+		"socket.io": "latest"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "Ryan Cromwell <ryan@echelontouch.com> (http://blog.cromwellhaus.com)",
+  "description": "A synchronized pomodoro timer for teams.",
+  "homepage": "http://pomradery.com",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cromwellryan/Pomradery.git"
   }
 }
