@@ -1,8 +1,6 @@
 var io = require('socket.io')
 	, express = require('express')
 	, fs = require('fs');
-		
-
 
 var app = express.createServer()
 	, io = io.listen(app),
@@ -43,8 +41,8 @@ app.get('/:type/:script', function(req,res) {
 	outfile(path, contenttype, res);
 });
 
-
-app.listen(8080);
+var port = process.env.PORT || 8080;
+app.listen(port);
 
 var pomodoro = function() {
 	var started = false
